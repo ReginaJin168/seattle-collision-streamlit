@@ -19,7 +19,7 @@ streamlit run app/streamlit_app.py
 ## Data
 
 - `data/Crashes-Analysis-Export-2023_09_20-2026_09_19.csv`: SDOT collision records (public).
-- `cleaned_data/all_collisions_weather.csv`: the same collisions after cleaning (`cleaned_data/collision_cleaning.py`), joined to hourly weather.
+- `cleaned_data/all_collisions_weather.csv`: the same collisions after cleaning (30 rows from a different extract removed), joined to hourly weather.
 - `EDA/hourly_data.csv`: hourly Seattle weather from the Open-Meteo API.
 
 Every number in the app is computed from these files when the app runs.

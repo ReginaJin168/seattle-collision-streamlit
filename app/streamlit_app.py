@@ -6,7 +6,6 @@ How to run (from the repository root):
 All numbers in the app are calculated from our processed data when the app
 runs. The forecast page also calls the Open-Meteo API live.
 """
-import sys
 from pathlib import Path
 
 import numpy as np
@@ -20,8 +19,7 @@ from sklearn.metrics import accuracy_score, roc_auc_score
 from sklearn.preprocessing import StandardScaler
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.append(str(ROOT / "cleaned_data"))
-from collision_cleaning import RAW_COLLISIONS, load_collisions  # our shared cleaning function
+RAW_COLLISIONS = ROOT / "data/Crashes-Analysis-Export-2023_09_20-2026_09_19.csv"
 
 st.set_page_config(page_title="Seattle Collisions", page_icon="🚦", layout="wide")
 
@@ -218,11 +216,12 @@ def page_overview():
 
     st.subheader("Data cleaning")
     raw = pd.read_csv(RAW_COLLISIONS, low_memory=False)
-    clean = load_collisions(verbose=False)
+    # rows from a different extract spell out ADDRTYPE ("Block"/"Intersection"); see EDA_with_cleaning_fixes.ipynb
+    other_extract = int(raw["ADDRTYPE"].isin(["Block", "Intersection"]).sum())
     st.dataframe(pd.DataFrame({
         "Step": ["Raw export", "Rows from a different extract (removed)", "After cleaning",
                  "No time of day recorded (00:00)", "Severity not recorded yet", "Latitude/longitude swapped (fixed)"],
-        "Records": [len(raw), len(raw) - len(clean), len(clean), int(crashes["time_unknown"].sum()),
+        "Records": [len(raw), other_extract, len(raw) - other_extract, int(crashes["time_unknown"].sum()),
                     int(crashes["injury"].isna().sum()),
                     int((pd.to_numeric(crashes["LATITUDE"], errors="coerce") < 0).sum())],
     }), hide_index=True, width="stretch",
