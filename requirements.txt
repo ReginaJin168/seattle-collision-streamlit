@@ -1,0 +1,7 @@
+# Python packages for the Streamlit app (app/streamlit_app.py)
+streamlit==1.51.0
+plotly==6.3.0
+pandas==2.3.3
+numpy==2.3.5
+scikit-learn==1.7.2
+requests==2.32.5

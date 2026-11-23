@@ -1,0 +1,14 @@
+# Streamlit settings for the project app (read when you run streamlit from the repository root).
+[theme]
+base = "dark"
+primaryColor = "#9fd5c9"
+backgroundColor = "#0c1115"
+secondaryBackgroundColor = "#162026"
+textColor = "#eef5f2"
+font = "sans serif"
+
+[server]
+headless = true
+
+[browser]
+gatherUsageStats = false
